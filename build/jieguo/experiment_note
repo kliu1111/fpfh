@@ -1,0 +1,39 @@
+-------------------------testb51_testb52-----------------------------------------
+-----------window环境----------------------
+ -0.872808  -0.162629  -0.460171   0.214801
+-0.0735859  -0.888224   0.453479   -0.71149
+ -0.482484   0.429662   0.763282   0.228965
+         0          0          0          1
+calculate time is: 553.61
+crude size is:4638
+//=========================================================//
+-----------ubuntu环境----------------------
+---pcl::SampleConsensusInitialAlignment<pcl::PointXYZ, pcl::PointXYZ,----这种方法暂时没有filter的办法
+ pcl::FPFHSignature33> sac_ia;
+ 0.998627  0.0102328 -0.0513749   0.469131
+0.00133919   0.975427   0.220318  -0.115572
+ 0.0523669  -0.220084   0.974074  0.0904558
+         0          0          0          1
+calculate time is: 84.7519
+crude size is:4643
+--------------TransformationEstimationSVD-----estimateRigidTransformation-----
+rude size is:4643
+ 0.796067  0.548484  0.255819 0.0488092
+ -0.59653  0.782436  0.178733 -0.277009
+ -0.10213 -0.294887  0.950059 0.0256542
+        0         0         0         1
+calculate time is: 1.27695
+--------------TransformationEstimationSVD-----estimateRigidTransformation-----filter------
+crude size is:4643
+After filter total correspondences is1560
+  0.979765  0.0312198   0.197698   0.107103
+-0.0330056   0.999439 0.00574371   0.131647
+ -0.197408 -0.0121527   0.980246 0.00868189
+         0          0          0          1
+calculate time is: 0.996708
+sh: 1: pause: not found
+=============================================================================
+总结：
+1、window环境下不能est_fpfh.setNumberOfThreads(8); //指定核计算，时间效率，计算的结果也不同
+2、同样数量的匹配点SampleConsensusInitialAlignment计算出的rt相对比TransformationEstimationSVD要准确，但是效率不高，计算时间没有第二种快
+3、尽量使用linux的系统，考虑准确度和时间效率，建议使用最后一种方法。
